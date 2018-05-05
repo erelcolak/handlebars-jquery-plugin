@@ -5,7 +5,7 @@ $(templateSelector).Handle({
 	source: sourceSelector,
 	data: data,
 	callback: function(){
-
+		// return any function after render process
 	}
 })
 */
