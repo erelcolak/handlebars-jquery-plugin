@@ -1,11 +1,13 @@
-// Handle Bars Rendering Plugin
+// HandleBars Rendering Plugin
 /*
 // Sample Usage
 $(templateSelector).Handle({
 	source: sourceSelector,
 	data: data,
+	append: false,
+	prepend: false,
 	callback: function(){
-		// return any function after render process
+
 	}
 })
 */
@@ -14,7 +16,9 @@ $.fn.Handle = function( options ){
 	options = $.extend({
 		source: '',
 		data: '',
-		callback: ''
+		callback: '',
+		append: false,
+		prepend: false,
 	}, options);
 	// Handlebars Rendering Variables
 	var source = (options.source).html();
@@ -22,7 +26,16 @@ $.fn.Handle = function( options ){
 	var render = compile(options.data);
 	// Rendering
 	this.each( function() {
-		$(this).html(render);
+		// if append option is false
+		if( options.append == true ){
+			$(this).append(render);
+		}
+		else if( options.prepend == true ){
+			$(this).prepend(render);
+		}
+		else{
+			$(this).html(render);
+		}
 		if( typeof options.callback == 'function' ){
 			options.callback.call(this);
 		}
