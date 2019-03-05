@@ -1,24 +1,25 @@
 // HandleBars Rendering Plugin
 /*
 // Sample Usage
-$(templateSelector).Handle({
-	source: sourceSelector,
-	data: data,
-	append: false,
-	prepend: false,
-	callback: function(){
-
-	}
-})
+// Handlebars Rendering Template - Element
+$('#renderElement').Handle({
+    source: $('#templateElement'),
+    data: data,
+    append: false,
+    prepend: false,
+    beforeCompile: function(){},
+    afterCompile: function(){}
+});
 */
 $.fn.Handle = function( options ){
 	// options
 	options = $.extend({
 		source: '',
 		data: '',
-		callback: '',
 		append: false,
 		prepend: false,
+		beforeCompile: '',
+		afterCompile: '',
 	}, options);
 	// Handlebars Rendering Variables
 	var source = (options.source).html();
@@ -36,8 +37,11 @@ $.fn.Handle = function( options ){
 		else{
 			$(this).html(render);
 		}
-		if( typeof options.callback == 'function' ){
-			options.callback.call(this);
+		if( typeof options.beforeCompile == 'function' ){
+			options.beforeCompile.call(this);
+		}
+		if( typeof options.afterCompile == 'function' ){
+			options.afterCompile.call(this)
 		}
 	});
 };
